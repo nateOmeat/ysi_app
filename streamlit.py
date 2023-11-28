@@ -29,7 +29,7 @@ def clean_df(df, well_id):
     return df[['Chemistry', 'Concentration', 'Well Id']][df['Well Id'] == well_id]
 
 def ysi_summary(df):
-    df['Concentration'] = df['Concentration'].astype(float)
+    df['Concentration'] = df['Concentration'].to_numeric()
     mean_cleaned = df.groupby('Chemistry').mean().round(3).reset_index().rename(columns={'Concentration': 'Mean Concentration (g/L)'})
     std_cleaned = df.groupby('Chemistry').std().round(3).reset_index().rename(columns={'Concentration': 'std (g/L)'}).drop(columns={'Chemistry'})
     return pd.concat([mean_cleaned, std_cleaned], axis=1)
